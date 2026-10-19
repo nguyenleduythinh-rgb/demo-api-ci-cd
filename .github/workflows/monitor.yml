@@ -2,12 +2,11 @@ name: Production Monitor
 
 on:
   schedule:
-    - cron: "0 * * * *" # Chạy mỗi giờ (UTC)
-  workflow_dispatch:
+    - cron: '0 * * * *' # Chạy tự động mỗi 1 giờ
+  workflow_dispatch: # Cho phép bấm chạy bằng tay trên giao diện
 
 jobs:
   monitor-api:
-    name: Monitor API
     runs-on: ubuntu-latest
 
     steps:
@@ -15,14 +14,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Cài đặt Postman CLI
-        run: curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+        run: |
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
 
       - name: Đăng nhập Postman
-        env:
-          POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
-        run: postman login --with-api-key "$POSTMAN_API_KEY"
+        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
 
-      - name: Chạy Monitor trên Postman Cloud
-        env:
-          POSTMAN_MONITOR_ID: ${{ vars.POSTMAN_MONITOR_ID }}
-        run: postman monitor run "28f2a4a3-1cb6-4943-8b11-e9d0dc26c207"
+      - name: Chạy kịch bản Monitor trực tiếp từ Cloud
+        run: |
+          postman collection run "51949671-28f2a4a3-1cb6-4943-8b11-e9d0dc26c207"
