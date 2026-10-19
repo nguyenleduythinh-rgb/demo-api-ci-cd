@@ -25,4 +25,4 @@ jobs:
       - name: Chạy Monitor trên Postman Cloud
         env:
           POSTMAN_MONITOR_ID: ${{ vars.POSTMAN_MONITOR_ID }}
-        run: postman monitor run "51949671-28f2a4a3-1cb6-4943-8b11-e9d0dc26c207"
+        run: postman monitor run "28f2a4a3-1cb6-4943-8b11-e9d0dc26c207"
